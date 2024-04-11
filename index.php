@@ -17,14 +17,13 @@ class Company{
     public $location;
     public $employees;
     public $stipendio;
-    public $speseGenerali;
-    public function __construct ($companyName, $location, $employees, $stipendio, $speseGenerali)
+    public static $salaryAllCompany = 0;
+    public function __construct ($companyName, $location, $employees, $stipendio)
     {
         $this->companyName = $companyName;
         $this->location = $location;
         $this->employees = $employees;
         $this->stipendio = $stipendio;
-        $this->speseGenerali = $speseGenerali;
 
     }
 public function employee(){
@@ -37,22 +36,28 @@ public function employee(){
 }
 
     public function annualExpense(){
-    $annualExpense = $this->employees * $this->stipendio + $this->speseGenerali;
-        echo "La spesa anuale dell'azienda $this->companyName è $annualExpense \n";
+        $annualExpense = $this->employees * $this->stipendio;
+        echo "La spesa anuale dell'azienda $this->companyName è $annualExpense € \n";
+        self::$salaryAllCompany += $annualExpense;
+    }
+
+    public static function allCompany(){
+        return self::$salaryAllCompany;
     }
 }
-$Company1 = new Company ("Aulab", "Italia",50, 5000, 10000000);
-$Company2 = new Company ("Faclon", "Italia", 0, 1600, 10000000);
-$Company3 = new Company ("Eurospin", "Italia", 10000, 1400, 24000000000);
-$Company4 = new Company ("Apple", "USA", 50000, 2500, 500000000000);
-$Company5 = new Company ("Playstation", "USA", 50000, 2500, 4000000000);
+$Company1 = new Company ("Aulab", "Italia",50, 5000);
+$Company2 = new Company ("Faclon", "Italia", 0, 1600);
+$Company3 = new Company ("Eurospin", "Italia", 10000, 1400);
+$Company4 = new Company ("Apple", "USA", 50000, 2500);
+$Company5 = new Company ("Playstation", "USA", 50000, 2500);
 
-/* var_dump ($Company1, $Company2, $Company3, $Company4, $Company5);
+/* var_dump ($Company1, $Company2, $Company3, $Company4, $Company5); */
+
 $Company1->annualExpense();
 $Company2->annualExpense(); 
 $Company3->annualExpense(); 
 $Company4->annualExpense(); 
-$Company5->annualExpense(); */ 
+$Company5->annualExpense();
 
 $Company1->employee();
 $Company2->employee();
@@ -60,4 +65,4 @@ $Company3->employee();
 $Company4->employee();
 $Company5->employee();
 
-
+echo "La spesa totale di tutte le aziende è \n" . Company::allCompany();
